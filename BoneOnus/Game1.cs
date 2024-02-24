@@ -21,9 +21,6 @@ namespace BoneOnus
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        
-        private Texture2D titleImg;
-        private Vector2 titlePos;
 
         // Width and height of the window
         private int width;
@@ -58,14 +55,10 @@ namespace BoneOnus
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            
-            // Setup title image and center its position
-            titleImg = Content.Load<Texture2D>("title");
-            titlePos = new Vector2((width / 2) - (titleImg.Width / 2), height / 10);
-
 
             menu = new MenuManager(
                 _spriteBatch,
+                Content.Load<Texture2D>("title"),
                 Content.Load<Texture2D>("start"),
                 StartGame,
                 Content.Load<Texture2D>("controls"),   
@@ -97,7 +90,6 @@ namespace BoneOnus
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
 
-            _spriteBatch.Draw(titleImg, titlePos, Color.White);
             menu.Draw(gameTime);
 
             _spriteBatch.End();
