@@ -69,28 +69,28 @@ namespace BoneOnus
 
             // Set up back button
             backButton = new Button(
-                new Rectangle((width / 2) - 125, 0, 250, 100),
+                new Rectangle((width / 2) - 125, 0, 250, 80),
                 ToggleControls,
                 back,
                 sb);
 
             // Set up start button
             titleButtons.Add(new Button(
-                new Rectangle((width / 2) - 125, 180, 250, 100),
+                new Rectangle((width / 2) - 125, 180, 250, 80),
                 startGame,
                 start,
                 sb));
 
             // Set up controls button
             titleButtons.Add(new Button(
-                new Rectangle((width / 2) - 125, 280, 250, 100),
+                new Rectangle((width / 2) - 125, 280, 250, 80),
                 ToggleControls,
                 controls,
                 sb));
 
             // Set up quit button
             titleButtons.Add(new Button(
-                new Rectangle((width / 2) - 125, 380, 250, 100),
+                new Rectangle((width / 2) - 125, 380, 250, 80),
                 quitGame,
                 quit,
                 sb));

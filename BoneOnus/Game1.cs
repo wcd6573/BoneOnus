@@ -66,11 +66,11 @@ namespace BoneOnus
 
             menu = new MenuManager(
                 _spriteBatch,
-                titleImg,
+                Content.Load<Texture2D>("start"),
                 StartGame,
-                titleImg,   // Replace with actual button textures
-                titleImg,
-                titleImg,
+                Content.Load<Texture2D>("controls"),   
+                Content.Load<Texture2D>("back"),
+                Content.Load<Texture2D>("quit"),
                 Exit,
                 width,
                 height);
