@@ -42,6 +42,8 @@ namespace BoneOnus
 
         private MenuManager menu;
 
+        private SpriteFont arial;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -65,6 +67,8 @@ namespace BoneOnus
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            arial = Content.Load<SpriteFont>("arial20");
 
             menu = new MenuManager(
                 _spriteBatch,

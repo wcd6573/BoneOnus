@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,15 @@ namespace BoneOnus
         /// bones, true if they are hammering the weapon together.
         /// </summary>
         private bool forgeState;
+
+        /// <summary>
+        /// Bone inventory that the player can select from when forging.
+        /// </summary>
+        private Dictionary<BoneType, int> inventory;
+
+        private SpriteFont font;
+        private Texture2D frameImg;
+        private List<Button> bones;
 
         // -------------------------- PROPERTIES ------------------------------
 
