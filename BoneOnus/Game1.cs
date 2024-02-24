@@ -29,8 +29,11 @@ namespace BoneOnus
         private int width;
         private int height;
 
-        private MouseState kbState;
+        private MouseState mState;
         private MouseState prevMState;
+        private GameState gameState;
+
+        private MenuManager menu;
 
         public Game1()
         {
@@ -45,6 +48,7 @@ namespace BoneOnus
 
             width = _graphics.PreferredBackBufferWidth;
             height = _graphics.PreferredBackBufferHeight;
+            gameState = GameState.Title;
 
             base.Initialize();
         }
@@ -59,6 +63,17 @@ namespace BoneOnus
             titleImg = Content.Load<Texture2D>("title");
             titlePos = new Vector2((width / 2) - (titleImg.Width / 2), height / 10);
 
+
+            menu = new MenuManager(
+                _spriteBatch,
+                titleImg,
+                StartGame,
+                titleImg,   // Replace with actual button textures
+                titleImg,
+                titleImg,
+                Exit,
+                width,
+                height);
         }
 
         protected override void Update(GameTime gameTime)
@@ -67,6 +82,10 @@ namespace BoneOnus
                 Exit();
 
             // TODO: Add your update logic here
+            prevMState = mState;
+            mState = Mouse.GetState();
+            
+            menu.Update(gameTime, mState, prevMState);
 
             base.Update(gameTime);
         }
@@ -79,9 +98,18 @@ namespace BoneOnus
             _spriteBatch.Begin();
 
             _spriteBatch.Draw(titleImg, titlePos, Color.White);
+            menu.Draw(gameTime);
 
             _spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        /// <summary>
+        /// Method passed to the title screen start button.
+        /// </summary>
+        private void StartGame()
+        {
+            gameState = GameState.Idle;
         }
     }
 }
