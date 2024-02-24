@@ -10,6 +10,13 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BoneOnus
 {
+    public enum GameState
+    {
+        Title,      // Title screen
+        Idle,       // Idle chilling
+        Forge       // Crafting "minigame"
+    }
+
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
@@ -21,6 +28,9 @@ namespace BoneOnus
         // Width and height of the window
         private int width;
         private int height;
+
+        private MouseState kbState;
+        private MouseState prevMState;
 
         public Game1()
         {
