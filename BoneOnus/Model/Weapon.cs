@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Management.Instrumentation;
-
+namespace BoneOnus.Model;
 public abstract class Weapon
 {
 	int damage;
 	int speed;
 	int durability;
-	Bone blade;
-	Bone hilt;
-	Bone handle;
+	BoneType blade;
+	BoneType hilt;
+	BoneType handle;
 
-	public Weapon(Bone blade, Bone hilt, Bone handle)
+	public Weapon(BoneType blade, BoneType hilt, BoneType handle)
 	{
 		this.blade = blade;
 		this.hilt = hilt;
 		this.handle = handle;
+		
+		// inset damage, speed, durability calculation here
 	}
 
 	void InflictDamage(Entity entity)

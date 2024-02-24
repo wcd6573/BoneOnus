@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Net.Http;
 
-public class Dagger extends Weapon
+namespace BoneOnus.Model;
+public class Dagger : Weapon
 {
-	public Dagger()
-	{
-	}
+    public Dagger(BoneType blade, BoneType hilt, BoneType handle) : base(blade, hilt, handle)
+    {
+    }
 }

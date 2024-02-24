@@ -1,8 +1,10 @@
 ﻿using System;
+using BoneOnus.Model;
 
-public class Sword extends Weapon
+namespace BoneOnus.Model;
+public class Sword : Weapon
 {
-	public Class1()
-	{
-	}
+    public Sword(BoneType blade, BoneType hilt, BoneType handle) : base(blade, hilt, handle)
+    {
+    }
 }

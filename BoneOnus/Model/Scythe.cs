@@ -1,8 +1,9 @@
 ﻿using System;
 
-public class Scythe extends Weapon
+namespace BoneOnus.Model;
+public class Scythe : Weapon
 {
-	public Class1()
-	{
-	}
+    public Scythe(BoneType blade, BoneType hilt, BoneType handle) : base(blade, hilt, handle)
+    {
+    }
 }

@@ -1,50 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
+using BoneOnus;
+using BoneOnus.Model;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 public class Entity
 {
-	List<Bone> bone;
+	List<BoneType> bones;
 	Texture2D texture;
 	Weapon weapon;
 	int health;
 
-	public Entity(List<Bone> bone, Texture2D texture, Weapon weapon, int health)
+	public Entity(List<BoneType> bones, Texture2D texture, Weapon weapon, int health)
 	{
-		this.bone = bone;
+		this.bones = bones;
 		this.texture = texture;
 		this.weapon = weapon;
 		this.health = health;
 	}
 
-    public Entity(List<Bone> bone, Texture2D texture, int health)
-    {
-        this.bone = bone;
-        this.texture = texture;
-        this.health = health;
-    }
-
-    private void Attack(Entity entity)
+	public Entity(List<BoneType> bones, Texture2D texture, int health)
 	{
-
+		this.bones = bones;
+		this.texture = texture;
+		this.health = health;
 	}
-	private void Equip(Weapon weapon)
+
+	public void Attack(Entity entity)
+	{
+		//TODO: add attack logic
+	}
+
+	public void Equip(Weapon weapon)
 	{
 		this.weapon = weapon;
 	}
 
-	private void TakeDamage(int damage)
+	public void TakeDamage(int damage)
 	{
 		this.health -= damage;
 	}
 
-    void Update(GameTime gameTime)
-    {
-        // TODO: Add your update logic here
+	void Update(GameTime gameTime)
+	{
+		// TODO: Add your update logic here
+	}
 
-        base.Update(gameTime);
-    }
-
-    void Draw(GameTime gameTime)
-    {
-        _spriteBatch.Begin();
-    }
+	void Draw(GameTime gameTime)
+	{
+		// TODO: Add your draw logic here
+	}
+}
