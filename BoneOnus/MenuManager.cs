@@ -7,6 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ * William Duprey
+ * 2/24/24
+ * Bone Onus Title Screen Class
+ */
+
 namespace BoneOnus
 {
     /// <summary>

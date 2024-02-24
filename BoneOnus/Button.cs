@@ -7,6 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 
+/*
+ * William Duprey
+ * 2/24/24
+ * Bone Onus Menu Button Class
+ */
+
 namespace BoneOnus
 {
     /// <summary>
