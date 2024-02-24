@@ -2,12 +2,12 @@
 namespace BoneOnus.Model;
 public abstract class Weapon
 {
-	int damage;
-	int speed;
-	int durability;
-	BoneType blade;
-	BoneType hilt;
-	BoneType handle;
+	private int damage;
+	private int speed;
+	private int durability;
+	private BoneType blade;
+	private BoneType hilt;
+	private BoneType handle;
 
 	public Weapon(BoneType blade, BoneType hilt, BoneType handle)
 	{
