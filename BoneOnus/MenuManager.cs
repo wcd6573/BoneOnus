@@ -30,6 +30,9 @@ namespace BoneOnus
         /// </summary>
         private SpriteBatch sb;
 
+        private Texture2D title;
+        private Rectangle titlePos;
+
         /// <summary>
         /// Contains the three buttons on the title screen:
         /// start, controls, and quit.
@@ -49,19 +52,26 @@ namespace BoneOnus
         /// Gigantic, disgusting constructor. But hey, it works.
         /// </summary>
         /// <param name="sb">SpriteBatch used to draw buttons / text.</param>
+        /// <param name="title">Title text texture.</param>
         /// <param name="start">Start button texture.</param>
         /// <param name="startGame">Start button method delegate.</param>
         /// <param name="controls">Controls button texture.</param>
         /// <param name="back">Back button texture.</param>
         /// <param name="quit">Quit button texture.</param>
         /// <param name="quitGame">Quit button method delegate.</param>
+        /// <param name="font">Spritefont used to draw </param>
         /// <param name="width">Width of window.</param>
         /// <param name="height">Height of window.</param>
-        public MenuManager(SpriteBatch sb, Texture2D start, ButtonClick startGame, 
-            Texture2D controls, Texture2D back, Texture2D quit, ButtonClick quitGame, 
+        public MenuManager(SpriteBatch sb, Texture2D title, Texture2D start,
+            ButtonClick startGame, Texture2D controls, Texture2D back, 
+            Texture2D quit, ButtonClick quitGame, /*SpriteFont font,*/ 
             int width, int height)
         {
             this.sb = sb;
+            this.title = title;
+            titlePos = new Rectangle((width / 2) - (title.Width / 2), height / 10,
+                title.Width, title.Height);
+
             titleButtons = new List<Button>();
 
             // Hard-coding heights is dumb and bad, but I don't have time to do
@@ -124,12 +134,16 @@ namespace BoneOnus
                 {
                     butt.Draw();
                 }
+                sb.Draw(title, titlePos, Color.White);
             }
         }
 
+        /// <summary>
+        /// Method passed for the Controls and Back button delegates.
+        /// </summary>
         private void ToggleControls()
         {
-
+            controls = !controls;
         }
     }
 }
