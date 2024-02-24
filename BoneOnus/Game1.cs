@@ -17,6 +17,16 @@ namespace BoneOnus
         Forge       // Crafting "minigame"
     }
 
+    public enum BoneType
+    {
+        Femur,
+        Skull,
+        Finger,
+        Rib,
+        Pelvis,
+        Spine
+    }
+
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
@@ -77,9 +87,19 @@ namespace BoneOnus
             // TODO: Add your update logic here
             prevMState = mState;
             mState = Mouse.GetState();
-            
-            menu.Update(gameTime, mState, prevMState);
 
+            switch (gameState)
+            {
+                case GameState.Title:
+                    menu.Update(gameTime, mState, prevMState);
+                    break;
+                case GameState.Idle:
+                    break;
+                case GameState.Forge:
+                    break;
+            }
+
+            
             base.Update(gameTime);
         }
 
@@ -90,7 +110,18 @@ namespace BoneOnus
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
 
-            menu.Draw(gameTime);
+            switch (gameState)
+            {
+                case GameState.Title:
+                    menu.Draw(gameTime);
+                    break;
+                case GameState.Idle:
+                    break;
+                case GameState.Forge:
+                    break;
+            }
+
+            
 
             _spriteBatch.End();
             base.Draw(gameTime);
