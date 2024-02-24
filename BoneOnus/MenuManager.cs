@@ -14,6 +14,9 @@ namespace BoneOnus
     /// </summary>
     internal class MenuManager
     {
+        /// <summary>
+        /// Declaration for button click delegate.
+        /// </summary>
         public delegate void ButtonClick();
 
         // ---------------------------- FIELDS --------------------------------
@@ -27,26 +30,58 @@ namespace BoneOnus
         /// </summary>
         private SpriteBatch sb;
 
+        /// <summary>
+        /// Contains the three buttons on the title screen:
+        /// start, controls, and quit.
+        /// </summary>
+        private List<Button> titleButtons;
 
+        /// <summary>
+        /// Back button for the controls screen.
+        /// </summary>
+        private Button back;
 
         // -------------------------- PROPERTIES ------------------------------
 
 
         // -------------------------- CONSTRUCTOR -----------------------------
-        public MenuManager(SpriteBatch sb)
+        public MenuManager(SpriteBatch sb, Texture2D start, Texture2D controls,
+            Texture2D back, Texture2D quit)
         {
             this.sb = sb;
+            titleButtons = new List<Button>();
+
         }
 
         // ---------------------------- METHODS -------------------------------
-        private void Update(GameTime time, MouseState mState, MouseState prevMState)
+        public void Update(GameTime time, MouseState mState, MouseState prevMState)
         {
-
+            if (controls)
+            {
+                back.Update(mState, prevMState);
+            }
+            else
+            {
+                foreach(Button butt in titleButtons)
+                {
+                    butt.Update(mState, prevMState);
+                }
+            }
         }
 
-        private void Draw(GameTime time)
+        public void Draw(GameTime time)
         {
-
+            if (controls)
+            {
+                back.Draw();
+            }
+            else
+            {
+                foreach (Button butt in titleButtons)
+                {
+                    butt.Draw();
+                }
+            }
         }
     }
 }
