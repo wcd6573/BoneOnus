@@ -39,18 +39,61 @@ namespace BoneOnus
         /// <summary>
         /// Back button for the controls screen.
         /// </summary>
-        private Button back;
+        private Button backButton;
 
         // -------------------------- PROPERTIES ------------------------------
 
 
         // -------------------------- CONSTRUCTOR -----------------------------
-        public MenuManager(SpriteBatch sb, Texture2D start, Texture2D controls,
-            Texture2D back, Texture2D quit)
+        /// <summary>
+        /// Gigantic, disgusting constructor. But hey, it works.
+        /// </summary>
+        /// <param name="sb">SpriteBatch used to draw buttons / text.</param>
+        /// <param name="start">Start button texture.</param>
+        /// <param name="startGame">Start button method delegate.</param>
+        /// <param name="controls">Controls button texture.</param>
+        /// <param name="back">Back button texture.</param>
+        /// <param name="quit">Quit button texture.</param>
+        /// <param name="quitGame">Quit button method delegate.</param>
+        /// <param name="width">Width of window.</param>
+        /// <param name="height">Height of window.</param>
+        public MenuManager(SpriteBatch sb, Texture2D start, ButtonClick startGame, 
+            Texture2D controls, Texture2D back, Texture2D quit, ButtonClick quitGame, 
+            int width, int height)
         {
             this.sb = sb;
             titleButtons = new List<Button>();
 
+            // Hard-coding heights is dumb and bad, but I don't have time to do
+            // good math based on the dimensions of the window
+
+            // Set up back button
+            backButton = new Button(
+                new Rectangle((width / 2) - 125, 0, 250, 100),
+                ToggleControls,
+                back,
+                sb);
+
+            // Set up start button
+            titleButtons.Add(new Button(
+                new Rectangle((width / 2) - 125, 180, 250, 100),
+                startGame,
+                start,
+                sb));
+
+            // Set up controls button
+            titleButtons.Add(new Button(
+                new Rectangle((width / 2) - 125, 280, 250, 100),
+                ToggleControls,
+                controls,
+                sb));
+
+            // Set up quit button
+            titleButtons.Add(new Button(
+                new Rectangle((width / 2) - 125, 380, 250, 100),
+                quitGame,
+                quit,
+                sb));
         }
 
         // ---------------------------- METHODS -------------------------------
@@ -58,7 +101,7 @@ namespace BoneOnus
         {
             if (controls)
             {
-                back.Update(mState, prevMState);
+                backButton.Update(mState, prevMState);
             }
             else
             {
@@ -73,7 +116,7 @@ namespace BoneOnus
         {
             if (controls)
             {
-                back.Draw();
+                backButton.Draw();
             }
             else
             {
@@ -82,6 +125,11 @@ namespace BoneOnus
                     butt.Draw();
                 }
             }
+        }
+
+        private void ToggleControls()
+        {
+
         }
     }
 }

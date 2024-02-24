@@ -44,7 +44,7 @@ namespace BoneOnus
 
 
         // -------------------------- CONSTRUCTOR -----------------------------
-        private Button(Rectangle rect, MenuManager.ButtonClick OnClick,
+        public Button(Rectangle rect, MenuManager.ButtonClick OnClick,
             Texture2D img, SpriteBatch sb)
         {
             this.rect = rect;
