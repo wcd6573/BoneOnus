@@ -4,6 +4,7 @@ using BoneOnus.Model;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 /*
  * William Duprey, Caity Kurutz, Sadie Newton
@@ -124,6 +125,26 @@ namespace BoneOnus
                     Content.Load<Texture2D>("w_hammer"),
                     Content.Load<Texture2D>("w_scythe"),
                     Content.Load<Texture2D>("w_dagger")
+                },
+                new List<Song>
+                {
+                    Content.Load<Song>("an1"),
+                    Content.Load<Song>("an2"),
+                    Content.Load<Song>("an3"),
+                    Content.Load<Song>("an4"),
+                    Content.Load<Song>("an5"),
+                    Content.Load<Song>("an6"),
+                    Content.Load<Song>("an7"),
+                },
+                new List<Song>
+                {
+                    Content.Load<Song>("b1"),
+                    Content.Load<Song>("b2"),
+                    Content.Load<Song>("b3"),
+                    Content.Load<Song>("b4"),
+                    Content.Load<Song>("b5"),
+                    Content.Load<Song>("b6"),
+                    Content.Load<Song>("b7"),
                 },
                 Content.Load<Texture2D>("forge_cursor"),
                 width,
