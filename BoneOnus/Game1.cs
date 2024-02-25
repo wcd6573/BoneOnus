@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BoneOnus.Model;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
@@ -74,6 +75,10 @@ namespace BoneOnus
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             
+            MediaPlayer.Play(Content.Load<Song>("medback"));
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.2f;
+            
             List<Texture2D> skeletonTextures = new List<Texture2D>();
 
             skeletonTextures.Add(Content.Load<Texture2D>("skeleton1"));
@@ -126,25 +131,25 @@ namespace BoneOnus
                     Content.Load<Texture2D>("w_scythe"),
                     Content.Load<Texture2D>("w_dagger")
                 },
-                new List<Song>
+                new List<SoundEffect>
                 {
-                    Content.Load<Song>("an1"),
-                    Content.Load<Song>("an2"),
-                    Content.Load<Song>("an3"),
-                    Content.Load<Song>("an4"),
-                    Content.Load<Song>("an5"),
-                    Content.Load<Song>("an6"),
-                    Content.Load<Song>("an7"),
+                    Content.Load<SoundEffect>("a1"),
+                    Content.Load<SoundEffect>("a2"),
+                    Content.Load<SoundEffect>("a3"),
+                    Content.Load<SoundEffect>("a4"),
+                    Content.Load<SoundEffect>("a5"),
+                    Content.Load<SoundEffect>("a6"),
+                    Content.Load<SoundEffect>("a7"),
                 },
-                new List<Song>
+                new List<SoundEffect>
                 {
-                    Content.Load<Song>("b1"),
-                    Content.Load<Song>("b2"),
-                    Content.Load<Song>("b3"),
-                    Content.Load<Song>("b4"),
-                    Content.Load<Song>("b5"),
-                    Content.Load<Song>("b6"),
-                    Content.Load<Song>("b7"),
+                    Content.Load<SoundEffect>("b1"),
+                    Content.Load<SoundEffect>("b2"),
+                    Content.Load<SoundEffect>("b3"),
+                    Content.Load<SoundEffect>("b4"),
+                    Content.Load<SoundEffect>("b5"),
+                    Content.Load<SoundEffect>("b6"),
+                    Content.Load<SoundEffect>("b7"),
                 },
                 Content.Load<Texture2D>("forge_cursor"),
                 width,
