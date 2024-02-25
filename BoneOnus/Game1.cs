@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using BoneOnus.Model;
 using Microsoft.Xna.Framework;
@@ -155,8 +156,21 @@ namespace BoneOnus
                         forge.Reset();
 
                         gameState = GameState.Idle;
-
-                        // TODO: Have skeleton hold weapon returned from forge
+                        switch (weapon.GetType())
+                        {
+                            case Type t when t == typeof(Sword):
+                                idle.DrawWeapon(Content.Load<Texture2D>("w_sword"));
+                                break;
+                            case Type t when t == typeof(Hammer):
+                                idle.DrawWeapon(Content.Load<Texture2D>("w_hammer"));
+                                break;
+                            case Type t when t == typeof(Scythe):
+                                idle.DrawWeapon(Content.Load<Texture2D>("w_scythe"));
+                                break;
+                            default:
+                                idle.DrawWeapon(Content.Load<Texture2D>("w_dagger"));
+                                break;
+                        }
                     }
                     break;
             }
@@ -178,7 +192,7 @@ namespace BoneOnus
                     menu.Draw(gameTime);
                     break;
                 case GameState.Idle:
-                    idle.Draw(gameTime, GraphicsDevice.Viewport.Height);
+                    idle.Draw(GraphicsDevice.Viewport.Height);
                     break;
                 case GameState.Forge:
                     forge.Draw(mState);
@@ -196,7 +210,7 @@ namespace BoneOnus
         {
             gameState = GameState.Idle;
         }
-        
+
         private void StartForge()
         {
             gameState = GameState.Forge;

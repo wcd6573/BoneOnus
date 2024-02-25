@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
+using BoneOnus.Model;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -33,12 +34,13 @@ namespace BoneOnus
         private int width;
         private int height;
 
-        private struct Skeleton
+        public struct Skeleton
         {
             public Vector2 Position;
             public Vector2 Velocity;
             public bool IsJumping;
             public Texture2D Texture;
+            public Texture2D WeaponTexture;
         }
 
         private Skeleton[] skeletons;
@@ -49,7 +51,8 @@ namespace BoneOnus
         // when skeleton clicked, then do this. establish handler to do things after click
         public delegate void SkeletonClickedEventHandler();
         public event SkeletonClickedEventHandler SkeletonClicked;
-
+        private Skeleton clickedSkeleton;
+        
         // -------------------------- CONSTRUCTOR -----------------------------
         /// <summary>
         /// Creation of the Idle screen
@@ -101,6 +104,7 @@ namespace BoneOnus
                         skeletonWidth, skeletonHeight);
                     if (skeletonBounds.Contains(currentMouseState.Position))
                     {
+                        clickedSkeleton = skeleton;
                         SkeletonClicked?.Invoke();
                         break;
                     }
@@ -138,7 +142,7 @@ namespace BoneOnus
             }
         }
 
-        public void Draw(GameTime time, int screenHeight)
+        public void Draw(int screenHeight)
         {
             int textureHeight = floor.Height;
 
@@ -147,14 +151,24 @@ namespace BoneOnus
             
             sb.Draw(bonesmithTexture, new Vector2(50,screenHeight - floor.Height - skeletonHeight * 0.5f),
                 null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 
-                0f);
+                1f);
             
             // draws each skeleton in the array
             foreach (Skeleton skeleton in skeletons)
             {
                 sb.Draw(skeleton.Texture, skeleton.Position, null, Color.White, 0f, 
-                    Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
+                    Vector2.Zero, 0.5f, SpriteEffects.None, 1f);
             }
+        }
+        
+        // Method to draw the weapon on top of the skeleton
+        public void DrawWeapon(Texture2D weaponTexture)
+        {
+            sb.Begin();
+            Console.WriteLine(clickedSkeleton.Position);
+            sb.Draw(weaponTexture, clickedSkeleton.Position, null, Color.White, 0f,
+                Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            sb.End();
         }
     }
 }
