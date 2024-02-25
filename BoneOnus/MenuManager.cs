@@ -36,6 +36,10 @@ namespace BoneOnus
         /// </summary>
         private SpriteBatch sb;
 
+        private SpriteFont font;
+        private string instructions;
+        private Vector2 instrPos;
+
         private Texture2D title;
         private Rectangle titlePos;
 
@@ -77,11 +81,13 @@ namespace BoneOnus
         /// <param name="height">Height of window.</param>
         public MenuManager(SpriteBatch sb, Texture2D title, Texture2D start,
             ButtonClick startGame, Texture2D controls, Texture2D back, 
-            Texture2D quit, ButtonClick quitGame, /*SpriteFont font,*/ 
+            Texture2D quit, ButtonClick quitGame, SpriteFont font,
             Texture2D background, int width, int height)
         {
             this.sb = sb;
             this.title = title;
+
+            
             this.background = background;
             backgroundPos1 = new Vector2(0, 0);
             backgroundPos2 = new Vector2(800, 0);
@@ -121,6 +127,21 @@ namespace BoneOnus
                 quitGame,
                 quit,
                 sb));
+
+            this.font = font;
+            instrPos = new Vector2(150, 150);
+            instructions =
+                "Welcome to Bone Onus, where the onus is on you, as the\n" +
+                "Bonesmith, to forge bone weapons for your bone allies.\n" +
+                "\n" +
+                "Click on one of them as they bounce around to enter the\n" +
+                "forge \'minigame.\' Once there, select three bones you'd\n" +
+                "like to forge into a weapon. Most will just end up as the\n" +
+                "default dagger, but there are a few specific recipes for\n" +
+                "other weapons.\n" +
+                "\n" +
+                "Once forged, the weapons will go to the skeleton you clicked\n" +
+                "on. That's pretty much it. Get to it, Bonesmith!";
         }
 
         // ---------------------------- METHODS -------------------------------
@@ -153,6 +174,7 @@ namespace BoneOnus
             if (controls)
             {
                 backButton.Draw();
+                sb.DrawString(font, instructions, instrPos, Color.White);
             }
             else
             {
