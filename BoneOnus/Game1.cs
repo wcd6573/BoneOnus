@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BoneOnus.Model;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -22,9 +23,9 @@ namespace BoneOnus
     {
         Femur,
         Skull,
-        Finger,
         Rib,
         Pelvis,
+        Finger,
         Spine
     }
 
@@ -45,6 +46,8 @@ namespace BoneOnus
         private ForgeManager forge;
 
         private SpriteFont arial;
+
+        private Weapon weapon;
 
         public Game1()
         {
@@ -126,6 +129,17 @@ namespace BoneOnus
                     break;
                 case GameState.Forge:
                     forge.Update(gameTime, mState, prevMState);
+
+                    // If forging is complete
+                    if(forge.ForgeState == ForgeState.Done)
+                    {
+                        weapon = forge.ForgedWeapon;
+                        forge.Reset();
+
+                        gameState = GameState.Idle;
+
+                        // TODO: Have skeleton hold weapon returned from forge
+                    }
                     break;
             }
 
@@ -152,8 +166,6 @@ namespace BoneOnus
                     break;
             }
 
-            
-
             _spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -163,7 +175,7 @@ namespace BoneOnus
         /// </summary>
         private void StartGame()
         {
-            gameState = GameState.Forge;
+            gameState = GameState.Idle;
         }
     }
 }

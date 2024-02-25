@@ -28,29 +28,37 @@ namespace BoneOnus
     {
         // ---------------------------- FIELDS --------------------------------
         /// <summary>
-        /// Control state of forge "minigame." True if the player is selecting
-        /// bones, false if they are hammering the weapon together.
+        /// Controls the state of forge the "minigame."
         /// </summary>
         private ForgeState forgeState;
 
-        /// <summary>
-        /// List of bones currently being crafted.
-        /// </summary>
         private List<BoneType> currentBones;
         private List<Rectangle> currentBonePos;
 
-        private Weapon weapon;
-
-        private SpriteFont font;
         private Texture2D frameImg;
-        
         private List<Rectangle> framePos;
         private List<Texture2D> boneImgs;
         private List<Texture2D> weaponImgs;
 
+        /// <summary>
+        /// The weapon being produced in the forge.
+        /// </summary>
+        private Weapon weapon;
+
+        /// <summary>
+        /// Whacking hammer displayed during the Whack state.
+        /// </summary>
         private Texture2D cursor;
+        
+        /// <summary>
+        /// Counts how many times the player has whacked the bones together.
+        /// Also used as a timer to end the minigame after the weapon is made.
+        /// </summary>
         int whacks = 0;
 
+        /// <summary>
+        /// SpriteBatch used to draw.
+        /// </summary>
         private SpriteBatch sb;
 
         // -------------------------- PROPERTIES ------------------------------
@@ -152,8 +160,7 @@ namespace BoneOnus
                         if(whacks >= 4)
                         {
                             forgeState = ForgeState.Forged;
-
-                            weapon = ForgeWeapon();
+                            ForgeWeapon();
 
                             // Clear bones list after weapon made
                             currentBones.Clear();
@@ -221,9 +228,36 @@ namespace BoneOnus
             }
         }
         
-        private Weapon ForgeWeapon()
+        /// <summary>
+        /// Sets the ForgeManager's weapon field to whatever weapon
+        /// will be made depending on the player's selection.
+        /// If no specific recipe is followed, a dagger is made.
+        /// </summary>
+        private void ForgeWeapon()
         {
-            return null;
+            // This is repetitive and bad, but it is what it is
+            if(currentBones.Contains(BoneType.Femur)
+                && currentBones.Contains(BoneType.Pelvis)
+                && currentBones.Contains(BoneType.Spine))
+            {
+                weapon = new Sword(currentBones[0], currentBones[1], currentBones[2]);
+            }
+            else if (currentBones.Contains(BoneType.Skull)
+                && currentBones.Contains(BoneType.Femur)
+                && currentBones.Contains(BoneType.Finger))
+            {
+                weapon = new Hammer(currentBones[0], currentBones[1], currentBones[2]);
+            }
+            else if (currentBones.Contains(BoneType.Rib)
+                && currentBones.Contains(BoneType.Spine)
+                && currentBones.Contains(BoneType.Femur))
+            {
+                weapon = new Scythe(currentBones[0], currentBones[1], currentBones[2]);
+            }
+            else
+            {
+                weapon = new Dagger(currentBones[0], currentBones[1], currentBones[2]);
+            }
         }
 
         /// <summary>
