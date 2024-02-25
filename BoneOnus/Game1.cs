@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 /*
  * William Duprey, Caity Kurutz, Sadie Newton
@@ -41,6 +42,7 @@ namespace BoneOnus
         private GameState gameState;
 
         private MenuManager menu;
+        private ForgeManager forge;
 
         private SpriteFont arial;
 
@@ -81,6 +83,21 @@ namespace BoneOnus
                 Exit,
                 width,
                 height);
+
+            forge = new ForgeManager(
+                _spriteBatch,
+                Content.Load<Texture2D>("forge_frame"),
+                new List<Texture2D>
+                {
+                    Content.Load<Texture2D>("forge_femur"),
+                    Content.Load<Texture2D>("forge_skull"),
+                    Content.Load<Texture2D>("forge_rib"),
+                    Content.Load<Texture2D>("forge_pelvis"),
+                    Content.Load<Texture2D>("forge_finger"),
+                    Content.Load<Texture2D>("forge_spine")
+                },
+                width,
+                height);
         }
 
         protected override void Update(GameTime gameTime)
@@ -100,6 +117,7 @@ namespace BoneOnus
                 case GameState.Idle:
                     break;
                 case GameState.Forge:
+                    forge.Update(gameTime, mState, prevMState);
                     break;
             }
 
@@ -122,6 +140,7 @@ namespace BoneOnus
                 case GameState.Idle:
                     break;
                 case GameState.Forge:
+                    forge.Draw();
                     break;
             }
 
@@ -136,7 +155,7 @@ namespace BoneOnus
         /// </summary>
         private void StartGame()
         {
-            gameState = GameState.Idle;
+            gameState = GameState.Forge;
         }
     }
 }
