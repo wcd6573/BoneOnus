@@ -107,7 +107,7 @@ namespace BoneOnus
                 skeletons[i].Texture = skeletonTextures[randomIndex];
                 skeletons[i].Position = new Vector2(random.Next(width - skeletonWidth), 
                     height - floor.Height - skeletonHeight * 0.5f);
-                skeletons[i].Velocity = new Vector2(walkSpeed, 0);
+                skeletons[i].Velocity = new Vector2((float)(random.Next(1, 4)), 0);
                 skeletons[i].IsJumping = false;
             }
         }
