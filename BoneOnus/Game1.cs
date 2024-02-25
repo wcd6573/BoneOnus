@@ -42,6 +42,7 @@ namespace BoneOnus
         private GameState gameState;
 
         private MenuManager menu;
+        private ForgeManager forge;
         private IdleManager idle;
 
         private SpriteFont arial;
@@ -98,6 +99,21 @@ namespace BoneOnus
                 Content.Load<Texture2D>("floor"));
             
             idle.SkeletonClicked += StartForge;
+
+            forge = new ForgeManager(
+                _spriteBatch,
+                Content.Load<Texture2D>("forge_frame"),
+                new List<Texture2D>
+                {
+                    Content.Load<Texture2D>("forge_femur"),
+                    Content.Load<Texture2D>("forge_skull"),
+                    Content.Load<Texture2D>("forge_rib"),
+                    Content.Load<Texture2D>("forge_pelvis"),
+                    Content.Load<Texture2D>("forge_finger"),
+                    Content.Load<Texture2D>("forge_spine")
+                },
+                width,
+                height);
         }
 
         protected override void Update(GameTime gameTime)
@@ -118,6 +134,7 @@ namespace BoneOnus
                     idle.Update(gameTime, GraphicsDevice.Viewport.Height, GraphicsDevice.Viewport.Width, mState, prevMState);
                     break;
                 case GameState.Forge:
+                    forge.Update(gameTime, mState, prevMState);
                     break;
             }
 
@@ -141,6 +158,7 @@ namespace BoneOnus
                     idle.Draw(gameTime, GraphicsDevice.Viewport.Height);
                     break;
                 case GameState.Forge:
+                    forge.Draw();
                     break;
             }
 
