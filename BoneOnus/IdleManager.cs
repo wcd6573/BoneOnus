@@ -28,6 +28,7 @@ namespace BoneOnus
         private Texture2D bonesmithTexture;
         private Texture2D floor;
         private Texture2D hearth;
+        private Button quit;
 
         private int skeletonWidth;
         private int skeletonHeight;
@@ -76,7 +77,8 @@ namespace BoneOnus
         /// <param name="height">Height of window.</param>
         /// 
         public IdleManager(SpriteBatch sb, int width, int height, List<Texture2D> skeletonTextures,
-            Texture2D bonesmithTexture, Texture2D floor, Texture2D hearth)
+            Texture2D bonesmithTexture, Texture2D floor, Texture2D hearth, Texture2D quit,
+            MenuManager.ButtonClick quitMethod)
         {
             this.sb = sb;
             random = new Random();
@@ -85,6 +87,11 @@ namespace BoneOnus
             this.bonesmithTexture = bonesmithTexture;
             this.floor = floor;
             this.hearth = hearth;
+            this.quit = new Button(new Rectangle(
+                0, 0, quit.Width, quit.Height),
+                quitMethod,
+                quit,
+                sb);
 
             // skeleton party initialization
             skeletonHeight = skeletonTextures[0].Height;
@@ -109,6 +116,7 @@ namespace BoneOnus
         public void Update(GameTime time, int screenHeight, int screenWidth, MouseState currentMouseState, 
             MouseState previousMouseState)
         {
+            quit.Update(currentMouseState, previousMouseState);
 
             if (currentMouseState.LeftButton == ButtonState.Pressed &&
                 previousMouseState.LeftButton == ButtonState.Released)
@@ -161,6 +169,7 @@ namespace BoneOnus
         public void Draw(int screenHeight)
         {
             sb.Draw(hearth, Vector2.Zero, Color.White);
+            quit.Draw();
 
             //int textureHeight = floor.Height;
             //sb.Draw(floor, new Vector2(0, screenHeight - textureHeight), null, Color.White,
@@ -180,6 +189,15 @@ namespace BoneOnus
                     sb.Draw(skeleton.WeaponTexture, skeleton.Position, null, Color.White,
                         0, default, 0.5f, SpriteEffects.None, 0);
                 }
+            }
+        }
+
+
+        public void Reset()
+        {
+            for (int i = 0; i < skeletons.Length; i++)
+            {
+                skeletons[i].WeaponTexture = null;
             }
         }
     }

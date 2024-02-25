@@ -111,7 +111,9 @@ namespace BoneOnus
                 skeletonTextures,
                 Content.Load<Texture2D>("bonesmith"),
                 Content.Load<Texture2D>("floor"),
-                Content.Load<Texture2D>("hearth"));
+                Content.Load<Texture2D>("hearth"),
+                Content.Load<Texture2D>("quittotitle"),
+                ToTitle);
             
             idle.SkeletonClicked += StartForge;
 
@@ -220,6 +222,12 @@ namespace BoneOnus
 
             _spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        private void ToTitle()
+        {
+            gameState = GameState.Title;
+            idle.Reset();
         }
 
         /// <summary>
