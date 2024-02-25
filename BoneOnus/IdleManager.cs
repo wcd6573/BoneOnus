@@ -52,7 +52,20 @@ namespace BoneOnus
         public delegate void SkeletonClickedEventHandler();
         public event SkeletonClickedEventHandler SkeletonClicked;
         private Skeleton clickedSkeleton;
-        
+
+        // -------------------------- PROPERTIES ------------------------------
+        public Texture2D SetWeapon
+        {
+            set
+            {
+                if(value != null)
+                {
+                    clickedSkeleton.WeaponTexture = value;
+                }
+            }
+        }
+
+
         // -------------------------- CONSTRUCTOR -----------------------------
         /// <summary>
         /// Creation of the Idle screen
@@ -83,7 +96,7 @@ namespace BoneOnus
             {
                 int randomIndex = random.Next(skeletonTextures.Count);
                 skeletons[i].Texture = skeletonTextures[randomIndex];
-                skeletons[i].Position = new Vector2(random.Next(width), 
+                skeletons[i].Position = new Vector2(random.Next(width - skeletonWidth), 
                     height - floor.Height - skeletonHeight * 0.5f);
                 skeletons[i].Velocity = new Vector2(walkSpeed, 0);
                 skeletons[i].IsJumping = false;
@@ -158,17 +171,11 @@ namespace BoneOnus
             {
                 sb.Draw(skeleton.Texture, skeleton.Position, null, Color.White, 0f, 
                     Vector2.Zero, 0.5f, SpriteEffects.None, 1f);
+                if(skeleton.WeaponTexture != null)
+                {
+                    sb.Draw(skeleton.WeaponTexture, skeleton.Position, Color.White);
+                }
             }
-        }
-        
-        // Method to draw the weapon on top of the skeleton
-        public void DrawWeapon(Texture2D weaponTexture)
-        {
-            sb.Begin();
-            Console.WriteLine(clickedSkeleton.Position);
-            sb.Draw(weaponTexture, clickedSkeleton.Position, null, Color.White, 0f,
-                Vector2.Zero, 1f, SpriteEffects.None, 0f);
-            sb.End();
         }
     }
 }

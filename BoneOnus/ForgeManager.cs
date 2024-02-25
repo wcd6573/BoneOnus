@@ -86,15 +86,6 @@ namespace BoneOnus
                 return null;
             }
         }
-        
-        /// <summary>
-        /// Read-only property for the List of Texture2Ds for the 
-        /// weapons, in the order: Sword, Hammer, Scythe, Dagger.
-        /// </summary>
-        public List<Texture2D> WeaponTextures
-        {
-            get { return weaponImgs; }
-        }
 
         // -------------------------- CONSTRUCTOR -----------------------------
         public ForgeManager(SpriteBatch sb, Texture2D anvil, Texture2D frameImg, 

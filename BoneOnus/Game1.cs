@@ -51,6 +51,8 @@ namespace BoneOnus
 
         private Weapon weapon;
 
+        private List<Texture2D> weaponTextures;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -105,6 +107,14 @@ namespace BoneOnus
             
             idle.SkeletonClicked += StartForge;
 
+            weaponTextures = new List<Texture2D>
+            {
+                Content.Load<Texture2D>("w_sword"),
+                Content.Load<Texture2D>("w_hammer"),
+                Content.Load<Texture2D>("w_scythe"),
+                Content.Load<Texture2D>("w_dagger")
+            };
+
             forge = new ForgeManager(
                 _spriteBatch,
                 Content.Load<Texture2D>("anvil"),
@@ -118,13 +128,7 @@ namespace BoneOnus
                     Content.Load<Texture2D>("forge_finger"),
                     Content.Load<Texture2D>("forge_spine")
                 },
-                new List<Texture2D>
-                {
-                    Content.Load<Texture2D>("w_sword"),
-                    Content.Load<Texture2D>("w_hammer"),
-                    Content.Load<Texture2D>("w_scythe"),
-                    Content.Load<Texture2D>("w_dagger")
-                },
+                weaponTextures,
                 Content.Load<Texture2D>("forge_cursor"),
                 width,
                 height);
@@ -157,21 +161,7 @@ namespace BoneOnus
                         forge.Reset();
 
                         gameState = GameState.Idle;
-                        switch (weapon.GetType())
-                        {
-                            case Type t when t == typeof(Sword):
-                                idle.DrawWeapon(Content.Load<Texture2D>("w_sword"));
-                                break;
-                            case Type t when t == typeof(Hammer):
-                                idle.DrawWeapon(Content.Load<Texture2D>("w_hammer"));
-                                break;
-                            case Type t when t == typeof(Scythe):
-                                idle.DrawWeapon(Content.Load<Texture2D>("w_scythe"));
-                                break;
-                            default:
-                                idle.DrawWeapon(Content.Load<Texture2D>("w_dagger"));
-                                break;
-                        }
+                        idle.SetWeapon = GetWeaponTexture(weapon);
                     }
                     break;
             }
@@ -215,6 +205,31 @@ namespace BoneOnus
         private void StartForge()
         {
             gameState = GameState.Forge;
+        }
+
+        /// <summary>
+        /// Given a Weapon, returns its corresponding texture.
+        /// </summary>
+        /// <param name="weapon">Weapon object.</param>
+        /// <returns>Texture2D for the weapon.</returns>
+        private Texture2D GetWeaponTexture(Weapon weapon)
+        {
+            if(weapon is Sword)
+            {
+                return weaponTextures[0];
+            }
+            else if (weapon is Hammer)
+            {
+                return weaponTextures[1];
+            }
+            else if (weapon is Scythe)
+            {
+                return weaponTextures[2];
+            }
+            else
+            {
+                return weaponTextures[3];
+            }
         }
     }
 }
