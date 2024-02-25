@@ -20,6 +20,7 @@ namespace BoneOnus
     {
         Select,
         Whack,
+        Forged,
         Done
     }
 
@@ -31,11 +32,6 @@ namespace BoneOnus
         /// bones, false if they are hammering the weapon together.
         /// </summary>
         private ForgeState forgeState;
-
-        /// <summary>
-        /// Bone inventory that the player can select from when forging.
-        /// </summary>
-        private Dictionary<BoneType, int> inventory;
 
         /// <summary>
         /// List of bones currently being crafted.
@@ -50,6 +46,10 @@ namespace BoneOnus
         
         private List<Rectangle> framePos;
         private List<Texture2D> boneImgs;
+        private List<Texture2D> weaponImgs;
+
+        private Texture2D cursor;
+        int whacks = 0;
 
         private SpriteBatch sb;
 
@@ -62,11 +62,29 @@ namespace BoneOnus
             get { return forgeState; }
         }
 
+        /// <summary>
+        /// Read-only property for the forge's weapon. Only
+        /// returns a weapon if the forge is in the "Done" state.
+        /// </summary>
+        public Weapon ForgedWeapon
+        {
+            get
+            {
+                if(forgeState == ForgeState.Done && weapon != null)
+                {
+                    return weapon;
+                }
+                return null;
+            }
+        }
+
         // -------------------------- CONSTRUCTOR -----------------------------
         public ForgeManager(SpriteBatch sb, Texture2D frameImg, List<Texture2D> boneImgs,
-            int width, int height)
+            List<Texture2D> weaponImgs, Texture2D cursor, int width, int height)
         {
             this.sb = sb;
+            this.cursor = cursor;
+            this.weaponImgs = weaponImgs;
 
             // Set up inventory frames
             this.frameImg = frameImg;
@@ -116,13 +134,47 @@ namespace BoneOnus
                     }
                     break;
                 case ForgeState.Whack:
+                    if(mState.LeftButton == ButtonState.Pressed
+                        && prevMState.LeftButton == ButtonState.Released)
+                    {
+                        // Slide outer bones closer to center
+                        Rectangle rect = currentBonePos[0];
+                        rect.X += 50;
+                        currentBonePos[0] = rect;
+
+                        rect = currentBonePos[2];
+                        rect.X -= 50;
+                        currentBonePos[2] = rect;
+
+                        whacks++;
+                        
+                        // If whacked enough, transition to Forged state
+                        if(whacks >= 4)
+                        {
+                            forgeState = ForgeState.Forged;
+
+                            weapon = ForgeWeapon();
+
+                            // Clear bones list after weapon made
+                            currentBones.Clear();
+                        }
+                    }
                     break;
-                case ForgeState.Done:
+                case ForgeState.Forged:
+                    // Reusing whacks variable as a timer
+                    if(whacks >= 180)
+                    {
+                        forgeState = ForgeState.Done;
+                    }
+                    else
+                    {
+                        whacks++;
+                    }
                     break;
             }
         }
 
-        public void Draw()
+        public void Draw(MouseState mState)
         {
             for(int i = 0; i < currentBones.Count; i++)
             {
@@ -144,20 +196,46 @@ namespace BoneOnus
                     }
                     break;
                 case ForgeState.Whack:
+                    sb.Draw(cursor, mState.Position.ToVector2(), Color.White);
                     break;
-                case ForgeState.Done:
+                case ForgeState.Forged:
+                    // Definitely questioning whether inheritance was even a good
+                    // idea, but it's too late to change things now
+                    if(weapon is Sword) 
+                    {
+                        sb.Draw(weaponImgs[0], currentBonePos[1], Color.White);
+                    }
+                    else if (weapon is Hammer)
+                    {
+                        sb.Draw(weaponImgs[1], currentBonePos[1], Color.White);
+                    }
+                    else if (weapon is Scythe)
+                    {
+                        sb.Draw(weaponImgs[2], currentBonePos[1], Color.White);
+                    }
+                    else
+                    {
+                        sb.Draw(weaponImgs[3], currentBonePos[1], Color.White);
+                    }
                     break;
             }
         }
         
-        /// <summary>
-        /// Increases the specified bone type by the given count.
-        /// </summary>
-        /// <param name="bone">Type of bone added.</param>
-        /// <param name="count">Number of bones added.</param>
-        public void AddBone(BoneType bone, int count)
+        private Weapon ForgeWeapon()
         {
-            inventory[bone] += count;
+            return null;
+        }
+
+        /// <summary>
+        /// Resets the forge for the next time a weapon needs to be made.
+        /// </summary>
+        public void Reset()
+        {
+            forgeState = ForgeState.Select;
+            whacks = 0;
+            currentBones.Clear();
+            currentBonePos[0] = new Rectangle(100, 180, 200, 200);
+            currentBonePos[2] = new Rectangle(500, 180, 200, 200);
         }
     }
 }

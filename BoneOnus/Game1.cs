@@ -96,6 +96,14 @@ namespace BoneOnus
                     Content.Load<Texture2D>("forge_finger"),
                     Content.Load<Texture2D>("forge_spine")
                 },
+                new List<Texture2D>
+                {
+                    Content.Load<Texture2D>("w_sword"),
+                    Content.Load<Texture2D>("w_hammer"),
+                    Content.Load<Texture2D>("w_scythe"),
+                    Content.Load<Texture2D>("w_dagger")
+                },
+                Content.Load<Texture2D>("forge_cursor"),
                 width,
                 height);
         }
@@ -140,7 +148,7 @@ namespace BoneOnus
                 case GameState.Idle:
                     break;
                 case GameState.Forge:
-                    forge.Draw();
+                    forge.Draw(mState);
                     break;
             }
 
