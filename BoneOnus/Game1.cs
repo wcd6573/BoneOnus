@@ -92,6 +92,7 @@ namespace BoneOnus
                 Content.Load<Texture2D>("back"),
                 Content.Load<Texture2D>("quit"),
                 Exit,
+                Content.Load<Texture2D>("background"),
                 width,
                 height);
             idle = new IdleManager(
