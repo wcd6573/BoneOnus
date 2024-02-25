@@ -50,6 +50,12 @@ namespace BoneOnus
         /// </summary>
         private Button backButton;
 
+        private Texture2D background;
+        private Vector2 backgroundPos1;
+        private Vector2 backgroundPos2;
+
+        private const float scrollRate = 1;
+
         // -------------------------- PROPERTIES ------------------------------
 
 
@@ -66,15 +72,20 @@ namespace BoneOnus
         /// <param name="quit">Quit button texture.</param>
         /// <param name="quitGame">Quit button method delegate.</param>
         /// <param name="font">Spritefont used to draw </param>
+        /// <param name="background">Scrolling background image.</param>
         /// <param name="width">Width of window.</param>
         /// <param name="height">Height of window.</param>
         public MenuManager(SpriteBatch sb, Texture2D title, Texture2D start,
             ButtonClick startGame, Texture2D controls, Texture2D back, 
             Texture2D quit, ButtonClick quitGame, /*SpriteFont font,*/ 
-            int width, int height)
+            Texture2D background, int width, int height)
         {
             this.sb = sb;
             this.title = title;
+            this.background = background;
+            backgroundPos1 = new Vector2(0, 0);
+            backgroundPos2 = new Vector2(800, 0);
+
             titlePos = new Rectangle((width / 2) - (title.Width / 2), height / 10,
                 title.Width, title.Height);
 
@@ -121,6 +132,15 @@ namespace BoneOnus
             }
             else
             {
+                backgroundPos1.X -= scrollRate;
+                backgroundPos2.X -= scrollRate;
+
+                if(backgroundPos1.X < -800)
+                {
+                    backgroundPos1.X = 0;
+                    backgroundPos2.X = 800;
+                }
+
                 foreach(Button butt in titleButtons)
                 {
                     butt.Update(mState, prevMState);
@@ -136,6 +156,9 @@ namespace BoneOnus
             }
             else
             {
+                sb.Draw(background, backgroundPos1, Color.White);
+                sb.Draw(background, backgroundPos2, Color.White);
+
                 foreach (Button butt in titleButtons)
                 {
                     butt.Draw();
