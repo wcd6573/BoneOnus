@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -41,6 +42,7 @@ namespace BoneOnus
         private GameState gameState;
 
         private MenuManager menu;
+        private IdleManager idle;
 
         private SpriteFont arial;
 
@@ -65,6 +67,12 @@ namespace BoneOnus
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            
+            List<Texture2D> skeletonTextures = new List<Texture2D>();
+
+            skeletonTextures.Add(Content.Load<Texture2D>("skeleton1"));
+            skeletonTextures.Add(Content.Load<Texture2D>("skeleton2"));
+            skeletonTextures.Add(Content.Load<Texture2D>("skeleton3"));
 
             // TODO: use this.Content to load your game content here
 
@@ -81,6 +89,15 @@ namespace BoneOnus
                 Exit,
                 width,
                 height);
+            idle = new IdleManager(
+                _spriteBatch,
+                width,
+                height,
+                skeletonTextures,
+                Content.Load<Texture2D>("bonesmith"),
+                Content.Load<Texture2D>("floor"));
+            
+            idle.SkeletonClicked += StartForge;
         }
 
         protected override void Update(GameTime gameTime)
@@ -98,6 +115,7 @@ namespace BoneOnus
                     menu.Update(gameTime, mState, prevMState);
                     break;
                 case GameState.Idle:
+                    idle.Update(gameTime, GraphicsDevice.Viewport.Height, GraphicsDevice.Viewport.Width, mState, prevMState);
                     break;
                 case GameState.Forge:
                     break;
@@ -120,6 +138,7 @@ namespace BoneOnus
                     menu.Draw(gameTime);
                     break;
                 case GameState.Idle:
+                    idle.Draw(gameTime, GraphicsDevice.Viewport.Height);
                     break;
                 case GameState.Forge:
                     break;
@@ -137,6 +156,11 @@ namespace BoneOnus
         private void StartGame()
         {
             gameState = GameState.Idle;
+        }
+        
+        private void StartForge()
+        {
+            gameState = GameState.Forge;
         }
     }
 }
