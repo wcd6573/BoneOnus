@@ -80,14 +80,16 @@ namespace BoneOnus
             {
                 int randomIndex = random.Next(skeletonTextures.Count);
                 skeletons[i].Texture = skeletonTextures[randomIndex];
-                skeletons[i].Position = new Vector2(random.Next(width), height - floor.Height - skeletonHeight * 0.5f);
+                skeletons[i].Position = new Vector2(random.Next(width), 
+                    height - floor.Height - skeletonHeight * 0.5f);
                 skeletons[i].Velocity = new Vector2(walkSpeed, 0);
                 skeletons[i].IsJumping = false;
             }
         }
 
         // ---------------------------- METHODS -------------------------------
-        public void Update(GameTime time, int screenHeight, int screenWidth, MouseState currentMouseState, MouseState previousMouseState)
+        public void Update(GameTime time, int screenHeight, int screenWidth, MouseState currentMouseState, 
+            MouseState previousMouseState)
         {
 
             if (currentMouseState.LeftButton == ButtonState.Pressed &&
@@ -143,14 +145,15 @@ namespace BoneOnus
             sb.Draw(floor, new Vector2(0, screenHeight - textureHeight), null, Color.White,
                 0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             
-            sb.Draw(bonesmithTexture, new Vector2(50,screenHeight - floor.Height - skeletonHeight * 0.5f), null, 
-                Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
+            sb.Draw(bonesmithTexture, new Vector2(50,screenHeight - floor.Height - skeletonHeight * 0.5f),
+                null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 
+                0f);
             
             // draws each skeleton in the array
-            foreach (var skeleton in skeletons)
+            foreach (Skeleton skeleton in skeletons)
             {
-                sb.Draw(skeleton.Texture, skeleton.Position, null, Color.White, 0f, Vector2.Zero,
-                    0.5f, SpriteEffects.None, 0f);
+                sb.Draw(skeleton.Texture, skeleton.Position, null, Color.White, 0f, 
+                    Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
             }
         }
     }
