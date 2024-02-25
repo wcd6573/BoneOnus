@@ -136,13 +136,7 @@ namespace BoneOnus
                     Content.Load<Texture2D>("forge_finger"),
                     Content.Load<Texture2D>("forge_spine")
                 },
-                new List<Texture2D>
-                {
-                    Content.Load<Texture2D>("w_sword"),
-                    Content.Load<Texture2D>("w_hammer"),
-                    Content.Load<Texture2D>("w_scythe"),
-                    Content.Load<Texture2D>("w_dagger")
-                },
+                weaponTextures,
                 new List<SoundEffect>
                 {
                     Content.Load<SoundEffect>("a1"),
@@ -163,7 +157,6 @@ namespace BoneOnus
                     Content.Load<SoundEffect>("b6"),
                     Content.Load<SoundEffect>("b7"),
                 },
-                weaponTextures,
                 Content.Load<Texture2D>("forge_cursor"),
                 width,
                 height);
