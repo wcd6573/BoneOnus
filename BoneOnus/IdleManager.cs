@@ -51,7 +51,7 @@ namespace BoneOnus
         // when skeleton clicked, then do this. establish handler to do things after click
         public delegate void SkeletonClickedEventHandler();
         public event SkeletonClickedEventHandler SkeletonClicked;
-        private Skeleton clickedSkeleton;
+        private int clickedSkeletonIndex;
 
         // -------------------------- PROPERTIES ------------------------------
         public Texture2D SetWeapon
@@ -60,7 +60,7 @@ namespace BoneOnus
             {
                 if(value != null)
                 {
-                    clickedSkeleton.WeaponTexture = value;
+                    skeletons[clickedSkeletonIndex].WeaponTexture = value;
                 }
             }
         }
@@ -111,13 +111,14 @@ namespace BoneOnus
             if (currentMouseState.LeftButton == ButtonState.Pressed &&
                 previousMouseState.LeftButton == ButtonState.Released)
             {
-                foreach (var skeleton in skeletons)
+                for (int i = 0; i < skeletons.Length; i++)
                 {
+                    Skeleton skeleton = skeletons[i];
                     Rectangle skeletonBounds = new Rectangle((int)skeleton.Position.X, (int)skeleton.Position.Y,
                         skeletonWidth, skeletonHeight);
                     if (skeletonBounds.Contains(currentMouseState.Position))
                     {
-                        clickedSkeleton = skeleton;
+                        clickedSkeletonIndex = i;
                         SkeletonClicked?.Invoke();
                         break;
                     }
@@ -173,7 +174,8 @@ namespace BoneOnus
                     Vector2.Zero, 0.5f, SpriteEffects.None, 1f);
                 if(skeleton.WeaponTexture != null)
                 {
-                    sb.Draw(skeleton.WeaponTexture, skeleton.Position, Color.White);
+                    sb.Draw(skeleton.WeaponTexture, skeleton.Position, null, Color.White,
+                        0, default, 0.5f, SpriteEffects.None, 0);
                 }
             }
         }
