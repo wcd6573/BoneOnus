@@ -103,7 +103,8 @@ namespace BoneOnus
                 height,
                 skeletonTextures,
                 Content.Load<Texture2D>("bonesmith"),
-                Content.Load<Texture2D>("floor"));
+                Content.Load<Texture2D>("floor"),
+                Content.Load<Texture2D>("hearth"));
             
             idle.SkeletonClicked += StartForge;
 

@@ -27,6 +27,7 @@ namespace BoneOnus
         
         private Texture2D bonesmithTexture;
         private Texture2D floor;
+        private Texture2D hearth;
 
         private int skeletonWidth;
         private int skeletonHeight;
@@ -75,7 +76,7 @@ namespace BoneOnus
         /// <param name="height">Height of window.</param>
         /// 
         public IdleManager(SpriteBatch sb, int width, int height, List<Texture2D> skeletonTextures,
-            Texture2D bonesmithTexture, Texture2D floor)
+            Texture2D bonesmithTexture, Texture2D floor, Texture2D hearth)
         {
             this.sb = sb;
             random = new Random();
@@ -83,7 +84,8 @@ namespace BoneOnus
             // texture initialization     
             this.bonesmithTexture = bonesmithTexture;
             this.floor = floor;
-            
+            this.hearth = hearth;
+
             // skeleton party initialization
             skeletonHeight = skeletonTextures[0].Height;
             skeletonWidth = skeletonTextures[0].Width;
@@ -158,12 +160,13 @@ namespace BoneOnus
 
         public void Draw(int screenHeight)
         {
-            int textureHeight = floor.Height;
+            sb.Draw(hearth, Vector2.Zero, Color.White);
 
-            sb.Draw(floor, new Vector2(0, screenHeight - textureHeight), null, Color.White,
-                0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
+            //int textureHeight = floor.Height;
+            //sb.Draw(floor, new Vector2(0, screenHeight - textureHeight), null, Color.White,
+            //    0f, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             
-            sb.Draw(bonesmithTexture, new Vector2(50,screenHeight - floor.Height - skeletonHeight * 0.5f),
+            sb.Draw(bonesmithTexture, new Vector2(100,screenHeight - floor.Height - skeletonHeight * 0.5f),
                 null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 
                 1f);
             
