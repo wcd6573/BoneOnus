@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 /*
  * William Duprey
@@ -40,6 +42,9 @@ namespace BoneOnus
         private List<Rectangle> framePos;
         private List<Texture2D> boneImgs;
         private List<Texture2D> weaponImgs;
+        private List<SoundEffect> anvilSounds;
+        private List<SoundEffect> boneSounds;
+        private Random random;
 
         /// <summary>
         /// The weapon being produced in the forge.
@@ -89,13 +94,17 @@ namespace BoneOnus
 
         // -------------------------- CONSTRUCTOR -----------------------------
         public ForgeManager(SpriteBatch sb, Texture2D anvil, Texture2D frameImg, 
-            List<Texture2D> boneImgs, List<Texture2D> weaponImgs, Texture2D cursor,
+            List<Texture2D> boneImgs, List<Texture2D> weaponImgs, List<SoundEffect> anvilSounds, List<SoundEffect> boneSounds, Texture2D cursor,
             int width, int height)
         {
             this.sb = sb;
             this.cursor = cursor;
             this.weaponImgs = weaponImgs;
+            this.anvilSounds = anvilSounds;
+            this.boneSounds = boneSounds;
             this.anvil = anvil;
+            
+            random = new Random();
 
             // Set up inventory frames
             this.frameImg = frameImg;
@@ -133,6 +142,10 @@ namespace BoneOnus
                             && mState.LeftButton == ButtonState.Pressed
                             && prevMState.LeftButton == ButtonState.Released)
                         {
+                            
+                            SoundEffectInstance boneSoundInstance = boneSounds[random.Next(0, 6)].CreateInstance();
+                            boneSoundInstance.Play();
+                            
                             // Add that bone to list of bones
                             currentBones.Add((BoneType)i);
                         }
@@ -148,6 +161,10 @@ namespace BoneOnus
                     if(mState.LeftButton == ButtonState.Pressed
                         && prevMState.LeftButton == ButtonState.Released)
                     {
+                        // Play anvil hit sound
+                        SoundEffectInstance anvilSoundInstance = anvilSounds[random.Next(0, 6)].CreateInstance();
+                        anvilSoundInstance.Play();
+                        
                         // Slide outer bones closer to center
                         Rectangle rect = currentBonePos[0];
                         rect.X += 50;
