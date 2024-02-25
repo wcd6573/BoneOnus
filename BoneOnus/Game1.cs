@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using BoneOnus.Model;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -22,9 +23,9 @@ namespace BoneOnus
     {
         Femur,
         Skull,
-        Finger,
         Rib,
         Pelvis,
+        Finger,
         Spine
     }
 
@@ -46,6 +47,8 @@ namespace BoneOnus
         private IdleManager idle;
 
         private SpriteFont arial;
+
+        private Weapon weapon;
 
         public Game1()
         {
@@ -112,6 +115,14 @@ namespace BoneOnus
                     Content.Load<Texture2D>("forge_finger"),
                     Content.Load<Texture2D>("forge_spine")
                 },
+                new List<Texture2D>
+                {
+                    Content.Load<Texture2D>("w_sword"),
+                    Content.Load<Texture2D>("w_hammer"),
+                    Content.Load<Texture2D>("w_scythe"),
+                    Content.Load<Texture2D>("w_dagger")
+                },
+                Content.Load<Texture2D>("forge_cursor"),
                 width,
                 height);
         }
@@ -135,6 +146,17 @@ namespace BoneOnus
                     break;
                 case GameState.Forge:
                     forge.Update(gameTime, mState, prevMState);
+
+                    // If forging is complete
+                    if(forge.ForgeState == ForgeState.Done)
+                    {
+                        weapon = forge.ForgedWeapon;
+                        forge.Reset();
+
+                        gameState = GameState.Idle;
+
+                        // TODO: Have skeleton hold weapon returned from forge
+                    }
                     break;
             }
 
@@ -158,11 +180,9 @@ namespace BoneOnus
                     idle.Draw(gameTime, GraphicsDevice.Viewport.Height);
                     break;
                 case GameState.Forge:
-                    forge.Draw();
+                    forge.Draw(mState);
                     break;
             }
-
-            
 
             _spriteBatch.End();
             base.Draw(gameTime);
