@@ -35,6 +35,7 @@ namespace BoneOnus
         private List<BoneType> currentBones;
         private List<Rectangle> currentBonePos;
 
+        private Texture2D anvil;
         private Texture2D frameImg;
         private List<Rectangle> framePos;
         private List<Texture2D> boneImgs;
@@ -85,14 +86,25 @@ namespace BoneOnus
                 return null;
             }
         }
+        
+        /// <summary>
+        /// Read-only property for the List of Texture2Ds for the 
+        /// weapons, in the order: Sword, Hammer, Scythe, Dagger.
+        /// </summary>
+        public List<Texture2D> WeaponTextures
+        {
+            get { return weaponImgs; }
+        }
 
         // -------------------------- CONSTRUCTOR -----------------------------
-        public ForgeManager(SpriteBatch sb, Texture2D frameImg, List<Texture2D> boneImgs,
-            List<Texture2D> weaponImgs, Texture2D cursor, int width, int height)
+        public ForgeManager(SpriteBatch sb, Texture2D anvil, Texture2D frameImg, 
+            List<Texture2D> boneImgs, List<Texture2D> weaponImgs, Texture2D cursor,
+            int width, int height)
         {
             this.sb = sb;
             this.cursor = cursor;
             this.weaponImgs = weaponImgs;
+            this.anvil = anvil;
 
             // Set up inventory frames
             this.frameImg = frameImg;
@@ -183,6 +195,10 @@ namespace BoneOnus
 
         public void Draw(MouseState mState)
         {
+            // Draw background
+            sb.Draw(anvil, Vector2.Zero, Color.White);
+
+            // Draw current bones
             for(int i = 0; i < currentBones.Count; i++)
             {
                 // Get texture by parsing bone enum to integer,

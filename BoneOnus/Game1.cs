@@ -105,6 +105,7 @@ namespace BoneOnus
 
             forge = new ForgeManager(
                 _spriteBatch,
+                Content.Load<Texture2D>("anvil"),
                 Content.Load<Texture2D>("forge_frame"),
                 new List<Texture2D>
                 {
